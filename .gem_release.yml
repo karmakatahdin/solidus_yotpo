@@ -1,0 +1,5 @@
+bump:
+  recurse: false
+  file: 'lib/solidus_yotpo/version.rb'
+  message: Bump SolidusYotpo to %{version}
+  tag: true
