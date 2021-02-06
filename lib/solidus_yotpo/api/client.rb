@@ -1,32 +1,33 @@
+# frozen_string_literal: true
+
 require 'singleton'
 require 'faraday'
 
 module SolidusYotpo
   module Api
-    class Error < StandardError; end
+    class RequestFailed < StandardError
+      def initialize(path, params, status, response)
+        @path = path.to_s
+        @params = params
+        @status = status
+        @response = response
+      end
+
+      def message
+        [
+          "Status: #{@status}",
+          "Path: #{@path}",
+          "request: #{@params}",
+          "response: #{@response}"
+        ].join "\n"
+      end
+    end
 
     class Client
       include Singleton
 
       API_URL = 'https://api.yotpo.com/'.freeze
 
-      class RequestFailed < Error
-        def initialize(path, params, status, response)
-          @path = path.to_s
-          @params = params
-          @status = status
-          @response = response
-        end
-
-        def message
-          [
-            "Status: #{@status}",
-            "Path: #{@path}",
-            "request: #{@params}",
-            "response: #{@response}"
-          ].join "\n"
-        end
-      end
 
       attr_reader :last_response, :last_response_raw
 

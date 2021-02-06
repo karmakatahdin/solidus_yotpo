@@ -1,8 +1,12 @@
+# frozen_string_literal: true
+
 require 'singleton'
 
 module SolidusYotpo
   class Auth
     include Singleton
+
+    attr_reader :api_key
 
     def initialize
       @api_key = ENV['YOTPO_APP_KEY']
