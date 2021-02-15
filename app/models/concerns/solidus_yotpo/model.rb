@@ -8,7 +8,7 @@ module SolidusYotpo
       include SolidusYotpo::Helpers
     end
 
-    def api
+    def yotpo_api
       SolidusYotpo::Api::Client.instance
     end
   end
