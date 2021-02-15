@@ -39,6 +39,10 @@ module SolidusYotpo
 
     private
 
+    def api
+      SolidusYotpo::Api::Client.instance
+    end
+
     def check_env
       return if [@api_key, @secret_key].all?(&:present?)
 
