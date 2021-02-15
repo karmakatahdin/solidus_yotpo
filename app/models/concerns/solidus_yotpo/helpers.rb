@@ -7,7 +7,8 @@ module SolidusYotpo
     def store_host
       @store_host ||=  begin
         Spree::Store.default.url.tap do |store_url|
-          store_url.replace("https://#{store_url}") unless store_url =~ /^https?/
+          # Ensure https://
+          store_url.replace("https://#{store_url}") unless store_url =~ /^https?/i
         end
       end
     end
