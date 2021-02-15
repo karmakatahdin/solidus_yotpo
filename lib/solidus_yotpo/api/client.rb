@@ -21,6 +21,8 @@ module SolidusYotpo
           "response: #{@response}"
         ].join "\n"
       end
+
+      alias to_s message
     end
 
     class Client
@@ -28,11 +30,7 @@ module SolidusYotpo
 
       API_URL = 'https://api.yotpo.com/'.freeze
 
-
       attr_reader :last_response, :last_response_raw
-
-      def initialize
-      end
 
       %i[get delete post put].each do |http_method|
         define_method http_method do |*args|
@@ -65,11 +63,11 @@ module SolidusYotpo
 
         status = response.status.to_s
 
-        if status.starts_with?('4') || json_response.key?('error')
-          raise RequestFailed.new(path, params, status, json_response)
+        if !status.starts_with?('2') || json_response.key?('error')
+          raise RequestFailed.new(path, payload, status, json_response)
         end
 
-        json_response
+        json_response['response']
 
       rescue JSON::ParserError
         raise "API response was not a valid JSON: #{response.body.inspect}"
