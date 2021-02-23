@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-SolidusYotpo.configure do |config|
-  # TODO: Remember to change this with the actual preferences you have implemented!
-  # config.sample_preference = 'sample_value'
+SolidusYotpo.configure do |c|
+  c.max_score = 5
+  c.display_unapproved_reviews = false
+  c.display_reviewer = true
 end
