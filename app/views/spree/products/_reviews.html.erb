@@ -1,0 +1,30 @@
+<div class="clearfix"></div>
+<div class="yotpo-reviews">
+    <h3 class="yotpo-reviews__title"><%= t('solidus_yotpo.title') %></h3>
+
+    <% if product.reviews_count.positive? %>
+        <div class="yotpo-reviews-summary">
+            <p class="yotpo-reviews-summary__score">
+                <span class="yotpo-reviews-summary__overall-rating"><%= t('solidus_yotpo.overall_rating') %></span>
+                <span class="yotpo-reviews-summary__average"><%= product.average_score %></span>
+                <span><%= t('solidus_yotpo.out_of', total: SolidusYotpo.config.max_score) %></span>
+                <span class="yotpo-reviews-summary__total">(<%= product.reviews_count %>)</span>
+            </p>
+            <p class="yotpo-reviews-summary__actions">
+                <% if try_spree_current_user %>
+                    <%= link_to t('solidus_yotpo.write'), new_product_review_path(@product) %>
+                <% else %>
+                    <%= t('solidus_yotpo.login') %>
+                <% end %>
+            </p>
+        </div>
+    <% end %>
+
+    <% if product.reviews_count.positive? %>
+        <div class="yotpo-reviews__list">
+            <%= render product.reviews %>
+        </div>
+    <% else %>
+        <p class="yotpo-reviews__no-results">No reviews yet</p>
+    <% end %>
+</div>

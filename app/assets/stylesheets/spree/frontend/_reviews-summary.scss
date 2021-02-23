@@ -1,0 +1,32 @@
+.yotpo-reviews-summary {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  font-size: 1.1rem;
+
+  @media screen and (min-width:768px) {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  &__score {
+  }
+
+  &__overall-rating {
+  }
+
+  &__average {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+
+  &__total {
+    color: #999;
+  }
+
+  &__actions {
+    a {
+      padding: 12px;
+    }
+  }
+}
