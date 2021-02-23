@@ -10,13 +10,16 @@ module SolidusYotpo
       show: 'reviews/%{id}',
     }.freeze
 
-    belongs_to :user, class_name: 'Spree::User'
-    belongs_to :product, class_name: 'Spree::Product'
+    belongs_to :user, class_name: 'Spree::User', counter_cache: true
+    belongs_to :product, class_name: 'Spree::Product', counter_cache: true
 
     validates_presence_of :title, :content, :score, :user, :product
     validates_numericality_of :score, only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: SolidusYotpo.config.max_score
 
-    after_create :send_to_yotpo
+    delegate :update_reviews_summary, to: :product
+
+    after_create :send_to_yotpo # TODO: Make async
+    after_save :update_reviews_summary
 
     def send_to_yotpo
       response = yotpo_api.post(YOTPO_ENDPOINT[:create], {}, to_payload)
