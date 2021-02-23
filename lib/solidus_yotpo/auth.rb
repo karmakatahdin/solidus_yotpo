@@ -11,8 +11,6 @@ module SolidusYotpo
     def initialize
       @api_key = ENV['YOTPO_APP_KEY']
       @secret_key = ENV['YOTPO_SECRET_KEY']
-      @client = Api::Client.instance
-
     end
 
     def self.method_missing(method_name, *args)
@@ -24,9 +22,7 @@ module SolidusYotpo
     def token
       Rails.cache.fetch('solidus-yotpo-api-token', expires_in: 1.day) do
         check_env
-        resp = @client.post(
-          'oauth/token',
-          {
+        resp = api.post('oauth/token', {}, {
             client_id: @api_key,
             client_secret: @secret_key,
             grant_type: 'client_credentials'
