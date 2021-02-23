@@ -25,11 +25,31 @@ module SolidusYotpo
       end
 
       def run_migrations
-        run_migrations = options[:auto_run_migrations] || ['', 'y', 'Y'].include?(ask('Would you like to run the migrations now? [Y/n]')) # rubocop:disable Layout/LineLength
+        run_migrations = ENV['AUTO_ACCEPT'] || options[:auto_run_migrations] || ['', 'y', 'Y'].include?(ask('Would you like to run the migrations now? [Y/n]')) # rubocop:disable Layout/LineLength
         if run_migrations
           run 'bin/rails db:migrate'
         else
           puts 'Skipping bin/rails db:migrate, don\'t forget to run it!' # rubocop:disable Rails/Output
+        end
+      end
+
+      def install_overrides
+        if ENV['RAILS_ENV'] == 'test'
+          choice = true
+        else
+          choice = ENV['AUTO_ACCEPT'] || (ask('Do you want to install the solidus_yotpo deface overrides into your app?', limited_to: %w[y n]) == 'y')
+          say('****************************************************************')
+          say('**************INSTALL NOTE**************************************')
+          say('****************************************************************')
+          say("Since you've chosen to add the solidus_yotpo deface overrides,")
+          say("please make sure you've included 'gem deface' in your Gemfile")
+          say("(if it is not already a dependency of your solidus application).")
+          say("See README for more details.")
+          say('****************************************************************')
+        end
+
+        if choice
+          copy_file '00_add_reviews_partial.html.erb.deface', 'app/overrides/spree/products/show/00_add_reviews_partial.html.erb.deface'
         end
       end
     end
