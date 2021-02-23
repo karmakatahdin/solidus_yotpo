@@ -6,9 +6,9 @@ require 'faraday'
 module SolidusYotpo
   module Api
     class RequestFailed < StandardError
-      def initialize(path, params, status, response)
+      def initialize(path, payload, status, response)
         @path = path.to_s
-        @params = params
+        @payload = payload
         @status = status
         @response = response
       end
@@ -17,7 +17,7 @@ module SolidusYotpo
         [
           "Status: #{@status}",
           "Path: #{@path}",
-          "request: #{@params}",
+          "request: #{@payload}",
           "response: #{@response}"
         ].join "\n"
       end
@@ -47,16 +47,16 @@ module SolidusYotpo
         )
       end
 
-      def request(method_type, path, params = nil)
+      def request(method_type, path, params = nil, payload = nil)
         @last_response_raw = nil
         @last_response = nil
 
-        params ||= {}
-        params = JSON.generate(params) if %i[post put].include? method_type.to_s.downcase.to_sym
+        payload ||= {}
+        payload = JSON.generate(payload) if %i[post put].include? method_type.to_s.downcase.to_sym
 
-        path = path.delete_prefix('/')
+        path = resolve_request_path(path, params)
 
-        response = connection.send(method_type, path, params)
+        response = connection.send(method_type, path, payload)
         @last_response_raw = response.body
         json_response = JSON.parse(response.body)
         @last_response = json_response
@@ -71,6 +71,12 @@ module SolidusYotpo
 
       rescue JSON::ParserError
         raise "API response was not a valid JSON: #{response.body.inspect}"
+      end
+
+      def resolve_request_path(path, params)
+        params ||= {}
+        params[:app_key] = SolidusYotpo::Auth.api_key
+        path.delete_prefix('/') % params
       end
     end
   end
