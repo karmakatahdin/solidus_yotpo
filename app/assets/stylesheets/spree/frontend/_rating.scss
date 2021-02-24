@@ -30,12 +30,14 @@
 
     label {
       font-size: 0;
-      width: $star-size * 1.2;
-      overflow: hidden;
+      width: auto;
       white-space: nowrap;
       cursor: pointer;
       color: $star-empty;
       transition: transform .1s ease-out;
+      line-height: 1.3;
+      text-shadow: 0 0 1px $star-fill, 0 0 1px $star-fill, 0 0 1px $star-fill, 0 0 1px $star-fill;
+      margin: 0 .125rem;
 
       &:before {
         content: '★';
@@ -52,5 +54,9 @@
         }
       }
     }
+  }
+
+  &.lg > label:before {
+    font-size: $star-size-lg;
   }
 }
