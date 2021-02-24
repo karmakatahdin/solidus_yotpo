@@ -11,7 +11,7 @@
                 <span class="yotpo-reviews-summary__total">(<%= product.reviews_count %>)</span>
             </p>
             <p class="yotpo-reviews-summary__actions">
-                <% if try_spree_current_user %>
+                <% if can? :review, @product %>
                     <%= link_to t('solidus_yotpo.write'), new_product_review_path(@product) %>
                 <% else %>
                     <%= t('solidus_yotpo.login') %>
