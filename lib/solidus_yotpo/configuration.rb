@@ -3,8 +3,7 @@
 module SolidusYotpo
   class Configuration
     # Define here the settings for this extensions, e.g.:
-    #
-    # attr_accessor :my_setting
+    attr_accessor :max_score, :display_unapproved_reviews, :display_reviewer
   end
 
   class << self

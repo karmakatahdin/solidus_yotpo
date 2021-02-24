@@ -1,0 +1,60 @@
+.yotpo-reviews {
+  display: block;
+
+  &__title {
+  }
+
+  &__list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  &__no-results {
+  }
+
+  &__separator {
+    width: 100%;
+    margin: 0;
+    color: #d3d3d3;
+  }
+}
+
+.yotpo-review {
+  &__title {
+    margin-bottom: 6px;
+  }
+
+  &__date {
+    margin-top: 6px;
+  }
+
+  &__timestamp {
+  }
+
+  &__body {
+  }
+
+  &__author {
+  }
+
+  &__author-name {
+  }
+
+  &__verified-badge {
+    background-color: #d3d3d3;
+    border-radius: 16px;
+    padding: 6px 12px;
+    display: inline-block;
+    margin-left: 16px;
+    font-size: 12px;
+
+    &:before {
+      content: '✓';
+      display: inline-block;
+      margin-right: 4px;
+      font-size: 1rem;
+      vertical-align: middle;
+    }
+  }
+}

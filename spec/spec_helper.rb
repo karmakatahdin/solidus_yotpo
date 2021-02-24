@@ -8,24 +8,27 @@ require 'solidus_dev_support/rspec/coverage'
 
 # Create the dummy app if it's still missing.
 dummy_env = "#{__dir__}/dummy/config/environment.rb"
-system 'bin/rake extension:test_app' unless File.exist? dummy_env
+system "bin/rake extension:test_app" unless File.exist? dummy_env
 require dummy_env
 
-# Requires factories and other useful helpers defined in spree_core.
-require 'solidus_dev_support/rspec/feature_helper'
+# change to feature_helper if system tests are added
+require 'solidus_dev_support/rspec/rails_helper'
+require 'pry-byebug'
+require 'awesome_print'
 
-# Requires supporting ruby files with custom matchers and macros, etc,
-# in spec/support/ and its subdirectories.
 Dir["#{__dir__}/support/**/*.rb"].sort.each { |f| require f }
 
-# Requires factories defined in lib/solidus_yotpo/testing_support/factories.rb
 SolidusDevSupport::TestingSupport::Factories.load_for(SolidusYotpo::Engine)
 
-RSpec.configure do |config|
-  config.infer_spec_type_from_file_location!
-  config.use_transactional_fixtures = false
+RSpec.configure do |c|
+  c.infer_spec_type_from_file_location!
+  c.use_transactional_fixtures = false
+  c.expose_dsl_globally = true
+  # c.mock_with :rspec
+  c.color = true
+  c.fail_fast = ENV['FAIL_FAST'] || false
 
   if Spree.solidus_gem_version < Gem::Version.new('2.11')
-    config.extend Spree::TestingSupport::AuthorizationHelpers::Request, type: :system
+    c.extend Spree::TestingSupport::AuthorizationHelpers::Request, type: :system
   end
 end

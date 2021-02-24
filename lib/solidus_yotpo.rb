@@ -8,3 +8,9 @@ require 'solidus_yotpo/version'
 require 'solidus_yotpo/engine'
 require 'solidus_yotpo/api/client'
 require 'solidus_yotpo/auth'
+
+module SolidusYotpo
+  def self.table_name_prefix
+    'solidus_yotpo_'
+  end
+end

@@ -11,6 +11,10 @@ module SolidusYotpo
 
     engine_name 'solidus_yotpo'
 
+    config.to_prepare do
+      ::Spree::Ability.register_ability(::SolidusYotpo::ReviewsAbility)
+    end
+
     # use rspec for tests
     config.generators do |g|
       g.test_framework :rspec

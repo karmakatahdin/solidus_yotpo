@@ -1,0 +1,28 @@
+<%
+# return unless review.approved? || SolidusYotpo.config.display_unapproved_reviews
+editable = local_assigns.fetch(:editable, false)
+%>
+<hr class="yotpo-reviews__separator">
+<div class="yotpo-review">
+    <h4 class="yotpo-review__title"><%= review.title %></h4>
+    <div class="yotpo-rating" title="<%= score_text(review) %>">
+        <%== stars(review, editable: editable) %>
+    </div>
+    <div class="yotpo-review__date">
+        <%= t('solidus_yotpo.reviewed_on') %>
+        <span class="yotpo-review__timestamp"><%= l(review.created_at, format: :long) %></span>
+    </div>
+
+    <div class="yotpo-review__body">
+        <%= simple_format(review.content) %>
+    </div>
+
+    <% if SolidusYotpo.config.display_reviewer %>
+        <p class="yotpo-review__author">
+            <%= t('solidus_yotpo.posted_by') %>
+            <span class="yotpo-review__author-name"><%= review.fullname %></span>
+            <span class="yotpo-review__verified-badge"><%= t('solidus_yotpo.verified_purchaser') %></span>
+        </p>
+    <% end %>
+
+</div>

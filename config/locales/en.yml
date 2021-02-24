@@ -3,3 +3,33 @@
 
 en:
   hello: Hello world
+  solidus_yotpo:
+    title: Reviews
+    reviews:
+      one: review
+      other: reviews
+    review:
+      verified_purchaser: Verified purchaser
+      posted_by: Posted by
+      reviewed_on: Reviewed on
+      anonymous: Anonymous
+    form:
+      title: Write a Review
+      submit: Submit
+    create:
+      success: Your review was submitted successfully!
+      failure: Sorry, but your review could not be submitted at this moment
+
+    overall_rating: Overall rating
+    write: Write a Review
+    login_to_write: Login to leave a review
+    out_of: out of %{total}
+    stars:
+      one: 1 star
+      other: "%{count} stars"
+    scores:
+      score_1: Terrible!
+      score_2: Bad
+      score_3: Not sure...
+      score_4: Good!
+      score_5: I loved it!
