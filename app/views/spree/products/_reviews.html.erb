@@ -14,7 +14,7 @@
                 <% if can? :review, @product %>
                     <%= link_to t('solidus_yotpo.write'), new_product_review_path(@product) %>
                 <% else %>
-                    <%= t('solidus_yotpo.login') %>
+                    <%= link_to_if respond_to?(:spree_login_path), t('solidus_yotpo.login_to_review'), spree_login_path %>
                 <% end %>
             </p>
         </div>
