@@ -7,7 +7,7 @@ class SolidusYotpo::ReviewsAbility
     if user.present?
       can :create, SolidusYotpo::Review
       can :review, Spree::Product do |product|
-        user.orders.joins(:products).complete.exists?(spree_products: { id: product.id })
+        user.orders.complete.joins(:products).complete.exists?(spree_products: { id: product.id })
       end
     end
   end
