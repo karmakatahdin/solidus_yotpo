@@ -9,7 +9,8 @@ module SolidusYotpo
       when SolidusYotpo::Review
         review = score
         score = review.score
-        fragment_name = dom_id(review, 'score')
+        # TODO: Handle input name/id generation appropriately in both
+        # form and multiple instances (review listing)
       end
 
       (1..SolidusYotpo.config.max_score).reverse_each.map do |n|
