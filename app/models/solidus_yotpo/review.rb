@@ -59,7 +59,7 @@ module SolidusYotpo
     end
 
     def order
-      @order ||= user.orders.joins(line_items: :product).first # || super
+      @order ||= user.orders.complete.joins(line_items: :product).first # || super
     end
 
     def line_item
